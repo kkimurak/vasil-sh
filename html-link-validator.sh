@@ -12,12 +12,16 @@
 
 validation_return_offset=3
 
-VALIDATOR_ECHO=""
+VALIDATOR_ECHO=":"
 
 if [ "${VALIDATOR_DEBUG}" = "true" ]; then
     VALIDATOR_ECHO="echo"
-else
-    VALIDATOR_ECHO=":"
+fi
+
+VALIDATOR_EXEC_ATTRIBUTE=":"
+
+if [ ! "${VALIDATOR_USE_AS_FUNCTION}" = "true" ];then
+    VALIDATOR_EXEC_ATTRIBUTE=""
 fi
 
 validate_internal_link_in_html() {
@@ -53,3 +57,5 @@ validate_internal_link_in_html() {
 
     return ${error_counter}
 }
+
+${VALIDATOR_EXEC_ATTRIBUTE} validate_internal_link_in_html "$@"

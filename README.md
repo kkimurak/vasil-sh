@@ -23,7 +23,7 @@ This simple script provides function to validate internal link in html that gene
 
     1 directory, 3 files
 
-    $ source html-link-validator.sh && validate_internal_link_in_html test/sample.html
+    $ html-link-validator.sh test/sample.html
 
     $ echo $?
     4
@@ -36,9 +36,22 @@ This simple script provides function to validate internal link in html that gene
     ```sh
     $ VALIDATOR_DEBUG=true
 
-    $ source html-link-validator.sh && validate_internal_link_in_html test/sample.html
+    $ html-link-validator.sh test/sample.html
     link invalid_link is invalid
     1 invalid link found
+    ```
+
+    If you want to import function using `source`, set `VALIDATOR_USE_AS_FUNCTION` to `true` and then do that.  
+    `source` is not specified in POSIX, so I'm not sure if it works for you.  
+    It works on my Fedora, but not works on Travis.
+
+    ```sh
+    $ VALIDATOR_USE_AS_FUNCTION=true
+
+    $ source html-link-validator.sh && validate_internal_link_in_html test/sample.html
+
+    $ echo $?
+    4
     ```
 
 ## author
