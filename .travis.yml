@@ -1,6 +1,10 @@
-os: linux
-arch: arm64
-dist: xenial
+jobs:
+  include:
+  - os: linux
+    dist: xenial
+  - os: linux
+    arch: arm64
+    dist: xenial 
 
 before_script:
   - export VALIDATOR_DEBUG=true
