@@ -1,0 +1,18 @@
+os: linux
+arch: arm64
+dist: xenial
+
+before_script:
+  - export VALIDATOR_DEBUG=true
+  - ${SHELL} --version
+  - echo --version
+  - grep --version
+  - sed --version
+  - sort --version
+  - uniq --version
+
+script:
+  - if [ ! $($SHELL -x html-link-validator.sh) -eq 1 ];then exit 1;fi
+  - if [ ! $($SHELL -x html-link-validator.sh non-existing-file.html) -eq 2 ];then exit 2;fi
+  - if [ ! $($SHELL -x html-link-validator.sh README.md) -eq 3 ];then exit 3;fi
+  - sh -x html-link-validator.sh test/sample.html
