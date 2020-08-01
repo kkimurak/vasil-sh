@@ -45,7 +45,7 @@ validate_internal_link_in_html() {
     error_counter=0;
     for link in ${link_list}; do
         if ! echo "${id_list}" | grep -q "${link}" ; then
-            ${VALIDATOR_ECHO} "link ${link} is invalid"
+            ${VALIDATOR_ECHO} "link \"${link}\" is invalid"
             error_counter=$((error_counter+1));
         fi
     done
