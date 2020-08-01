@@ -30,7 +30,8 @@ This simple script provides function to validate internal link in html that gene
     ```
 
     Note that offset is added to returning value if at least one invalid link found, to avoid conflict with other error message (e.g. 2 means "no such file").  
-    Please refer variable `validation_return_offset`.
+    Please refer variable `validation_return_offset`.  
+
     You can set VALIDATOR_DEBUG=true to see debug message  
 
     ```sh
