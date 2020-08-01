@@ -44,7 +44,7 @@ validate_internal_link_in_html() {
     id_list="$(grep "<.* id=.*>" $1 | sed "s:\(<.*id=\"\)\(.*\)\">.*:\2:g" | sort)"
     error_counter=0;
     for link in ${link_list}; do
-        if ! $(echo "${id_list}" | grep -q ${link}) ; then
+        if ! echo "${id_list}" | grep -q "${link}" ; then
             ${VALIDATOR_ECHO} "link ${link} is invalid"
             error_counter=$((error_counter+1));
         fi
