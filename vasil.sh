@@ -10,32 +10,32 @@
 #   4 or larger : returning value - validation_return_offset is the number of invalid links.
 # @author kkimurak
 
-validation_return_offset=3
+vasil_return_offset=3
 
-VALIDATOR_ECHO=":"
+VASIL_ECHO=":"
 
-if [ "${VALIDATOR_DEBUG}" = "true" ]; then
-    VALIDATOR_ECHO="echo"
+if [ "${VASIL_DEBUG}" = "true" ]; then
+    VASIL_ECHO="echo"
 fi
 
-VALIDATOR_EXEC_ATTRIBUTE=":"
+VASIL_EXEC_ATTRIBUTE=":"
 
-if [ ! "${VALIDATOR_USE_AS_FUNCTION}" = "true" ];then
-    VALIDATOR_EXEC_ATTRIBUTE=""
+if [ ! "${VASIL_USE_AS_FUNCTION}" = "true" ];then
+    VASIL_EXEC_ATTRIBUTE=""
 fi
 
-validate_internal_link_in_html() {
+vasil_main() {
     if [ ! $# -eq 1 ]; then
-        ${VALIDATOR_ECHO} "too many (or less) argments: $# argments detected"
-        ${VALIDATOR_ECHO} "usage: validate_internal_link_in_html target_file.html"
+        ${VASIL_ECHO} "too many (or less) argments: $# argments detected"
+        ${VASIL_ECHO} "usage: validate_internal_link_in_html target_file.html"
         return 1
     fi
     if [ ! -e "$1" ]; then
-        ${VALIDATOR_ECHO} "$1 does not exist"
+        ${VASIL_ECHO} "$1 does not exist"
         return 2
     fi
     if [ ! "$(echo "$1" | sed 's/^.*\.\([^\.]*\)$/\1/')" = "html" ]; then
-        ${VALIDATOR_ECHO} "$1 is not html file"
+        ${VASIL_ECHO} "$1 is not html file"
         return 3
     fi
 
@@ -47,18 +47,18 @@ validate_internal_link_in_html() {
     error_counter=0;
     for link in ${link_list}; do
         if ! echo "${id_list}" | grep -q "${link}" ; then
-            ${VALIDATOR_ECHO} "link \"${link}\" is invalid"
+            ${VASIL_ECHO} "link \"${link}\" is invalid"
             error_counter=$((error_counter+1));
         fi
     done
     IFS=${IFS_org}
-    ${VALIDATOR_ECHO} "${error_counter} invalid link found"
+    ${VASIL_ECHO} "${error_counter} invalid link found"
     # add offset
     if [ ! ${error_counter} -eq 0 ]; then
-        error_counter=$((error_counter+validation_return_offset))
+        error_counter=$((error_counter+vasil_return_offset))
     fi
 
     return ${error_counter}
 }
 
-${VALIDATOR_EXEC_ATTRIBUTE} validate_internal_link_in_html "$@"
+${VASIL_EXEC_ATTRIBUTE} vasil_main "$@"

@@ -7,7 +7,7 @@ jobs:
     dist: xenial 
 
 before_script:
-  - export VALIDATOR_DEBUG=true
+  - export VASIL_DEBUG=true
   - ${SHELL} --version
   - echo --version
   - grep --version
@@ -16,7 +16,7 @@ before_script:
   - uniq --version
 
 script:
-  - if [ $($SHELL html-link-validator.sh) -ne 1 ];then exit 1;fi
-  - if [ $($SHELL html-link-validator.sh non-existing-file.html) -ne 2 ];then exit 2;fi
-  - if [ $($SHELL html-link-validator.sh README.md) -ne 3 ];then exit 3;fi
-  - if [ $($SHELL html-link-validator.sh test/sample.html) -ne 4 ];then exit 4;fi
+  - if [ $($SHELL vasil.sh) -ne 1 ];then exit 1;fi
+  - if [ $($SHELL vasil.sh non-existing-file.html) -ne 2 ];then exit 2;fi
+  - if [ $($SHELL vasil.sh README.md) -ne 3 ];then exit 3;fi
+  - if [ $($SHELL vasil.sh test/sample.html) -ne 4 ];then exit 4;fi
