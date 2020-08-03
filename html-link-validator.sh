@@ -34,7 +34,7 @@ validate_internal_link_in_html() {
         ${VALIDATOR_ECHO} "$1 does not exist"
         return 2
     fi
-    if [ ! "$(echo $1 | sed 's/^.*\.\([^\.]*\)$/\1/')" = "html" ]; then
+    if [ ! "$(echo "$1" | sed 's/^.*\.\([^\.]*\)$/\1/')" = "html" ]; then
         ${VALIDATOR_ECHO} "$1 is not html file"
         return 3
     fi
@@ -42,8 +42,8 @@ validate_internal_link_in_html() {
     IFS_org=${IFS}
     IFS="$(printf "#\n")"
     # start checking
-    link_list="$(sed -e "s:\(.*\)<a href=:\1\n<a href=:g" $1 | grep "<a href=\"#" | sed 's:.*href="\#\(.*\)">.*:\1\#:g' | sort | uniq | tr -d "\n")"
-    id_list="$(grep "<.* id=.*>" $1 | sed "s:\(<.*id=\"\)\(.*\)\">.*:\2:g" | sort)"
+    link_list="$(sed -e "s:\(.*\)<a href=:\1\n<a href=:g" "$1" | grep "<a href=\"#" | sed 's:.*href="\#\(.*\)">.*:\1\#:g' | sort | uniq | tr -d "\n")"
+    id_list="$(grep "<.* id=.*>" "$1" | sed "s:\(<.*id=\"\)\(.*\)\">.*:\2:g" | sort)"
     error_counter=0;
     for link in ${link_list}; do
         if ! echo "${id_list}" | grep -q "${link}" ; then
