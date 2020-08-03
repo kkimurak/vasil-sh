@@ -16,7 +16,7 @@ before_script:
   - uniq --version
 
 script:
-  - if [ $($SHELL vasil.sh) -ne 1 ];then exit 1;fi
-  - if [ $($SHELL vasil.sh non-existing-file.html) -ne 2 ];then exit 2;fi
-  - if [ $($SHELL vasil.sh README.md) -ne 3 ];then exit 3;fi
-  - if [ $($SHELL vasil.sh test/sample.html) -ne 4 ];then exit 4;fi
+  - $SHELL vasil.sh; result="$?"; if [ "${result}" -ne 1 ];then exit 1;fi
+  - $SHELL vasil.sh non-existing-file.html; result="$?"; if [ "${result}" -ne 2 ];then exit 2;fi
+  - $SHELL vasil.sh README.md; result="$?"; if [ "${result}" -ne 3 ];then exit 3;fi
+  - $SHELL vasil.sh test/sample.html; result=$?; if [ "${result}" -ne 5 ];then exit 4;fi
