@@ -26,7 +26,7 @@ This simple script provides function to validate internal link in html that gene
     $ html-link-validator.sh test/sample.html
 
     $ echo $?
-    4
+    5
     ```
 
     Note that offset is added to returning value if at least one invalid link found, to avoid conflict with other error message (e.g. 2 means "no such file").  
@@ -35,11 +35,10 @@ This simple script provides function to validate internal link in html that gene
     You can set VALIDATOR_DEBUG=true to see debug message  
 
     ```sh
-    $ VALIDATOR_DEBUG=true
-
-    $ html-link-validator.sh test/sample.html
-    link invalid_link is invalid
-    1 invalid link found
+    $ VALIDATOR_DEBUG=true sh html-link-validator.sh test/sample.html
+    link "invalid_link" is invalid
+    link "link containing white space" is invalid
+    2 invalid link found
     ```
 
     If you want to import function using `source`, set `VALIDATOR_USE_AS_FUNCTION` to `true` and then do that.  
@@ -52,7 +51,7 @@ This simple script provides function to validate internal link in html that gene
     $ source html-link-validator.sh && validate_internal_link_in_html test/sample.html
 
     $ echo $?
-    4
+    5
     ```
 
 ## author

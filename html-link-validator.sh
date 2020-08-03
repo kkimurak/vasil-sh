@@ -39,8 +39,10 @@ validate_internal_link_in_html() {
         return 3
     fi
 
+    IFS_org=${IFS}
+    IFS="$(printf "#\n")"
     # start checking
-    link_list="$(sed -e "s:\(.*\)<a href=:\1\n<a href=:g" $1 | grep "<a href=\"#" | sed 's:.*href="\#\(.*\)">.*:\1:g' | sort | uniq)"
+    link_list="$(sed -e "s:\(.*\)<a href=:\1\n<a href=:g" $1 | grep "<a href=\"#" | sed 's:.*href="\#\(.*\)">.*:\1\#:g' | sort | uniq | tr -d "\n")"
     id_list="$(grep "<.* id=.*>" $1 | sed "s:\(<.*id=\"\)\(.*\)\">.*:\2:g" | sort)"
     error_counter=0;
     for link in ${link_list}; do
@@ -49,6 +51,7 @@ validate_internal_link_in_html() {
             error_counter=$((error_counter+1));
         fi
     done
+    IFS=${IFS_org}
     ${VALIDATOR_ECHO} "${error_counter} invalid link found"
     # add offset
     if [ ! ${error_counter} -eq 0 ]; then
